@@ -2,20 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Single species population dynamics – DI32011</title>
+<title>Single species population dynamics – Logistic Map</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -87,24 +90,22 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../part2/CtsTimeMultiPop.html" rel="next">
-<link href="../part1/DiscreteTimeTwoPop.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-445b8638c3d06994fee0907d791121c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
+  "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
+  "panel-placement": "end",
+  "type": "overlay",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -140,7 +141,7 @@ div.csl-indent {
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -171,184 +172,39 @@ window.Quarto = {
 
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../part2/CtsTimeOnePop.html">Continuous time</a></li><li class="breadcrumb-item"><a href="../part2/CtsTimeOnePop.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Single species population dynamics</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
-    </div>
-  </nav>
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Logistic Map</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-end">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-    <div class="sidebar-title mb-0 py-0">
-      <a href="../">DI32011</a> 
-        <div class="sidebar-tools-main">
-    <a href="https://github.com/PlanarSkyrmion/DI32011/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="../DI32011.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
-</div>
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">DI32011: Mathematical Biology I</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../introduction/Introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Discrete time</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../part1/DiscreteTimeOnePop.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Single species population dynamics</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../part1/DiscreteTimeTwoPop.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multi species population dynamics in discrete time</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Continuous time</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../part2/CtsTimeOnePop.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Single species population dynamics</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../part2/CtsTimeMultiPop.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multi species population dynamics</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../part2/Biochemicalkinetics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Biochemical kinetics</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../appendix/PythonAppendix.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Python</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../appendix/CurveSketching.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Curve sketching</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#the-malthusian-linear-model" id="toc-the-malthusian-linear-model" class="nav-link active" data-scroll-target="#the-malthusian-linear-model"><span class="header-section-number">4.1</span> The Malthusian (linear) model</a></li>
-  <li><a href="#tools-for-analysing-the-dynamics-of-a-single-population-in-continuous-time" id="toc-tools-for-analysing-the-dynamics-of-a-single-population-in-continuous-time" class="nav-link" data-scroll-target="#tools-for-analysing-the-dynamics-of-a-single-population-in-continuous-time"><span class="header-section-number">4.2</span> Tools for analysing the dynamics of a single population in continuous time</a>
-  <ul class="collapse">
-  <li><a href="#numerical-solution" id="toc-numerical-solution" class="nav-link" data-scroll-target="#numerical-solution"><span class="header-section-number">4.2.1</span> Numerical solution</a></li>
-  <li><a href="#steady-state" id="toc-steady-state" class="nav-link" data-scroll-target="#steady-state"><span class="header-section-number">4.2.2</span> Steady-state</a></li>
-  <li><a href="#linear-stability-analysis" id="toc-linear-stability-analysis" class="nav-link" data-scroll-target="#linear-stability-analysis"><span class="header-section-number">4.2.3</span> Linear stability analysis</a></li>
-  <li><a href="#graphical-solution" id="toc-graphical-solution" class="nav-link" data-scroll-target="#graphical-solution"><span class="header-section-number">4.2.4</span> Graphical solution</a></li>
-  <li><a href="#bifurcation-diagrams" id="toc-bifurcation-diagrams" class="nav-link" data-scroll-target="#bifurcation-diagrams"><span class="header-section-number">4.2.5</span> Bifurcation diagrams</a></li>
-  </ul></li>
-  <li><a href="#the-logistic-growth-model" id="toc-the-logistic-growth-model" class="nav-link" data-scroll-target="#the-logistic-growth-model"><span class="header-section-number">4.3</span> The logistic growth model</a>
-  <ul class="collapse">
-  <li><a href="#model-development" id="toc-model-development" class="nav-link" data-scroll-target="#model-development"><span class="header-section-number">4.3.1</span> Model development</a></li>
-  <li><a href="#steady-states-and-linear-stability" id="toc-steady-states-and-linear-stability" class="nav-link" data-scroll-target="#steady-states-and-linear-stability"><span class="header-section-number">4.3.2</span> Steady states and linear stability</a></li>
-  <li><a href="#graphical-analysis" id="toc-graphical-analysis" class="nav-link" data-scroll-target="#graphical-analysis"><span class="header-section-number">4.3.3</span> Graphical analysis</a></li>
-  <li><a href="#an-exact-solution" id="toc-an-exact-solution" class="nav-link" data-scroll-target="#an-exact-solution"><span class="header-section-number">4.3.4</span> An exact solution</a></li>
-  </ul></li>
-  <li><a href="#the-spruce-budworm-model" id="toc-the-spruce-budworm-model" class="nav-link" data-scroll-target="#the-spruce-budworm-model"><span class="header-section-number">4.4</span> The spruce budworm model</a>
-  <ul class="collapse">
-  <li><a href="#model-development-1" id="toc-model-development-1" class="nav-link" data-scroll-target="#model-development-1"><span class="header-section-number">4.4.1</span> Model development</a></li>
-  <li><a href="#nondimensionalisation" id="toc-nondimensionalisation" class="nav-link" data-scroll-target="#nondimensionalisation"><span class="header-section-number">4.4.2</span> Nondimensionalisation</a></li>
-  <li><a href="#numerical-solutions-1" id="toc-numerical-solutions-1" class="nav-link" data-scroll-target="#numerical-solutions-1"><span class="header-section-number">4.4.3</span> Numerical solutions</a></li>
-  <li><a href="#steady-state-analysis" id="toc-steady-state-analysis" class="nav-link" data-scroll-target="#steady-state-analysis"><span class="header-section-number">4.4.4</span> Steady state analysis</a></li>
-  <li><a href="#linear-stability-analysis-1" id="toc-linear-stability-analysis-1" class="nav-link" data-scroll-target="#linear-stability-analysis-1"><span class="header-section-number">4.4.5</span> Linear stability analysis</a></li>
-  <li><a href="#bifurcation-analysis" id="toc-bifurcation-analysis" class="nav-link" data-scroll-target="#bifurcation-analysis"><span class="header-section-number">4.4.6</span> Bifurcation analysis</a></li>
-  <li><a href="#hysteresis" id="toc-hysteresis" class="nav-link" data-scroll-target="#hysteresis"><span class="header-section-number">4.4.7</span> Hysteresis</a></li>
-  </ul></li>
-  <li><a href="#harvesting" id="toc-harvesting" class="nav-link" data-scroll-target="#harvesting"><span class="header-section-number">4.5</span> Harvesting</a></li>
-  <li><a href="#delay-differential-equation-models" id="toc-delay-differential-equation-models" class="nav-link" data-scroll-target="#delay-differential-equation-models"><span class="header-section-number">4.6</span> Delay differential equation models</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">4.7</span> References</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/PlanarSkyrmion/DI32011/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
-    </div>
+    
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../part2/CtsTimeOnePop.html">Continuous time</a></li><li class="breadcrumb-item"><a href="../part2/CtsTimeOnePop.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Single species population dynamics</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Single species population dynamics</span></h1>
+<h1 class="title">Single species population dynamics</h1>
 </div>
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page">
 
     
   
@@ -361,20 +217,20 @@ window.Quarto = {
 
 
 <p>In this chapter we define time, <span class="math inline">\(t\)</span>, to be a continuous variable and the population density, <span class="math inline">\(N(t)\)</span>, to represent the size of a given population.</p>
-<section id="the-malthusian-linear-model" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="the-malthusian-linear-model"><span class="header-section-number">4.1</span> The Malthusian (linear) model</h2>
+<section id="the-malthusian-linear-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-malthusian-linear-model">The Malthusian (linear) model</h2>
 <p>As time is now a continuous variable, we consider an interval of time <span class="math inline">\(\delta t\)</span>. Consider a population of size <span class="math inline">\(N(t)\)</span>. If the per capita production rate is <span class="math inline">\(b\)</span>, then in time <span class="math inline">\(\delta t\)</span> the increase in population size will be <span id="eq-noLabel"><span class="math display">\[
 b N(t) \delta t.
-\tag{4.1}\]</span></span> Similarly, if the per capita death rate is <span class="math inline">\(d\)</span>, the decrease in population size in time <span class="math inline">\(\delta t\)</span> will be <span id="eq-noLabel"><span class="math display">\[
+\tag{1}\]</span></span> Similarly, if the per capita death rate is <span class="math inline">\(d\)</span>, the decrease in population size in time <span class="math inline">\(\delta t\)</span> will be <span id="eq-noLabel"><span class="math display">\[
 d N(t) \delta t.
-\tag{4.2}\]</span></span> Hence <span id="eq-noLabel"><span class="math display">\[
+\tag{2}\]</span></span> Hence <span id="eq-noLabel"><span class="math display">\[
 N(t+\delta t)= N(t) + (bN(t)-dN(t))\delta t.
-\tag{4.3}\]</span></span> Rearranging and taking the limit as <span class="math inline">\(\delta t \rightarrow 0\)</span> yields <span id="eq-noLabel"><span class="math display">\[
+\tag{3}\]</span></span> Rearranging and taking the limit as <span class="math inline">\(\delta t \rightarrow 0\)</span> yields <span id="eq-noLabel"><span class="math display">\[
 \frac{dN}{dt}=(b-d)N=rN(t).
-\tag{4.4}\]</span></span></p>
+\tag{4}\]</span></span></p>
 <p>The solution can be found using seperation of variables, <span id="eq-noLabel"><span class="math display">\[
 N(t)=N_0\exp(rt),
-\tag{4.5}\]</span></span> where <span class="math inline">\(N_0\)</span> is the initial population at time <span class="math inline">\(t=0\)</span>. We can describe qualitatively different solutions behaviours,</p>
+\tag{5}\]</span></span> where <span class="math inline">\(N_0\)</span> is the initial population at time <span class="math inline">\(t=0\)</span>. We can describe qualitatively different solutions behaviours,</p>
 <ul>
 <li><span class="math inline">\(r&gt;0\)</span>, the solution increases exponentially,</li>
 <li><span class="math inline">\(r&lt;0\)</span>, the solution decreases exponentially,</li>
@@ -383,39 +239,39 @@ N(t)=N_0\exp(rt),
 <p>Malthusian growth in the continuous time model leads to either a constant population, exponentially increasing or exponentially decreasing growth. As was the case for the discrete time model, such a model could account for biological system only in particularly limited circumstances.</p>
 <p>The Malthusian model (constant per capita growth rate) can exhibit a limited range of behaviour. To account for limitation of population growth at large population densities due to, for example, limited resources, we consider nonlinear per capita growth rates.</p>
 </section>
-<section id="tools-for-analysing-the-dynamics-of-a-single-population-in-continuous-time" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="tools-for-analysing-the-dynamics-of-a-single-population-in-continuous-time"><span class="header-section-number">4.2</span> Tools for analysing the dynamics of a single population in continuous time</h2>
+<section id="tools-for-analysing-the-dynamics-of-a-single-population-in-continuous-time" class="level2">
+<h2 class="anchored" data-anchor-id="tools-for-analysing-the-dynamics-of-a-single-population-in-continuous-time">Tools for analysing the dynamics of a single population in continuous time</h2>
 <p>Let <span class="math inline">\(N=N(t)\)</span>. We consider the general form for a single species model defined in continuous time, <span id="eq-gensinglespecodeagain"><span class="math display">\[
 \frac{dN}{dt}=f(N)N=H(N),
-\tag{4.6}\]</span></span> where <span class="math inline">\(f\)</span> is the per capita growth rate and <span class="math inline">\(H\)</span> is the net growth rate.</p>
-<section id="numerical-solution" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="numerical-solution"><span class="header-section-number">4.2.1</span> Numerical solution</h3>
-<p>Although an equation of the form <a href="#eq-gensinglespecodeagain" class="quarto-xref">Equation&nbsp;<span>4.6</span></a> may not be explicitly integrable, so long as the right-hand side is sufficiently well behaved, we can numerically integrate the problem (e.g.&nbsp;using packages such as Python’s odeint). Such a technique provides a numerical approximation to the exact solution, given specific values of model parameters and initial conditions (i.e.&nbsp;we can graph solutions).</p>
+\tag{6}\]</span></span> where <span class="math inline">\(f\)</span> is the per capita growth rate and <span class="math inline">\(H\)</span> is the net growth rate.</p>
+<section id="numerical-solution" class="level3">
+<h3 class="anchored" data-anchor-id="numerical-solution">Numerical solution</h3>
+<p>Although an equation of the form <a href="#eq-gensinglespecodeagain" class="quarto-xref">Equation&nbsp;6</a> may not be explicitly integrable, so long as the right-hand side is sufficiently well behaved, we can numerically integrate the problem (e.g.&nbsp;using packages such as Python’s odeint). Such a technique provides a numerical approximation to the exact solution, given specific values of model parameters and initial conditions (i.e.&nbsp;we can graph solutions).</p>
 </section>
-<section id="steady-state" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="steady-state"><span class="header-section-number">4.2.2</span> Steady-state</h3>
-<p>We denote <strong>steady-state solutions</strong> or <strong>equilibria</strong> of <a href="#eq-gensinglespecodeagain" class="quarto-xref">Equation&nbsp;<span>4.6</span></a> using <span class="math inline">\(N=N^*\)</span>. At a steady-state, <span id="eq-noLabel"><span class="math display">\[
+<section id="steady-state" class="level3">
+<h3 class="anchored" data-anchor-id="steady-state">Steady-state</h3>
+<p>We denote <strong>steady-state solutions</strong> or <strong>equilibria</strong> of <a href="#eq-gensinglespecodeagain" class="quarto-xref">Equation&nbsp;6</a> using <span class="math inline">\(N=N^*\)</span>. At a steady-state, <span id="eq-noLabel"><span class="math display">\[
 \frac{dN}{dt}=0,
-\tag{4.7}\]</span></span> and hence steady-states can be obtained by solving the algebraic equation, <span id="eq-noLabel"><span class="math display">\[
+\tag{7}\]</span></span> and hence steady-states can be obtained by solving the algebraic equation, <span id="eq-noLabel"><span class="math display">\[
 H(N^*)=0.
-\tag{4.8}\]</span></span> Note, some texts may call these fixed points or critical points. The first is often used in dynamical systems, while the second is older and rarely used as it can be ambiguous.</p>
+\tag{8}\]</span></span> Note, some texts may call these fixed points or critical points. The first is often used in dynamical systems, while the second is older and rarely used as it can be ambiguous.</p>
 </section>
-<section id="linear-stability-analysis" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3" class="anchored" data-anchor-id="linear-stability-analysis"><span class="header-section-number">4.2.3</span> Linear stability analysis</h3>
+<section id="linear-stability-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="linear-stability-analysis">Linear stability analysis</h3>
 <p>To perform a linear stability analysis near an equillibrium we make the change of variables, <span id="eq-noLabel"><span class="math display">\[
 N(t)=N^*+\hat{N}(t),
-\tag{4.9}\]</span></span> where the new dependent variable, <span class="math inline">\(\hat{N}(t)\)</span>, is a perturbation about the steady state <span class="math inline">\(N^*\)</span>. The time derivative on the left-hand side of <a href="#eq-gensinglespecodeagain" class="quarto-xref">Equation&nbsp;<span>4.6</span></a> transforms to, <span id="eq-noLabel"><span class="math display">\[
+\tag{9}\]</span></span> where the new dependent variable, <span class="math inline">\(\hat{N}(t)\)</span>, is a perturbation about the steady state <span class="math inline">\(N^*\)</span>. The time derivative on the left-hand side of <a href="#eq-gensinglespecodeagain" class="quarto-xref">Equation&nbsp;6</a> transforms to, <span id="eq-noLabel"><span class="math display">\[
 \frac{dN}{dt}= \frac{d }{dt} (N^*) + \frac{d }{dt}(\hat{N}(t))=\frac{d\hat{N}(t) }{dt}.
-\tag{4.10}\]</span></span> Hence <a href="#eq-gensinglespecodeagain" class="quarto-xref">Equation&nbsp;<span>4.6</span></a> transforms to <span id="eq-noLabel"><span class="math display">\[
+\tag{10}\]</span></span> Hence <a href="#eq-gensinglespecodeagain" class="quarto-xref">Equation&nbsp;6</a> transforms to <span id="eq-noLabel"><span class="math display">\[
 \frac{d\hat{N}(t) }{dt} = H(N^*+\hat{N}(t)).
-\tag{4.11}\]</span></span></p>
-<p>Employing a Taylor expansion on the right-hand side of <a href="#eq-gensinglespecodeagain" class="quarto-xref">Equation&nbsp;<span>4.6</span></a> we get, <span id="eq-noLabel"><span class="math display">\[
+\tag{11}\]</span></span></p>
+<p>Employing a Taylor expansion on the right-hand side of <a href="#eq-gensinglespecodeagain" class="quarto-xref">Equation&nbsp;6</a> we get, <span id="eq-noLabel"><span class="math display">\[
 \frac{d\hat{N}(t) }{dt} = H(N^*)+  H'(N^*)\hat{N}(t) + \frac{1}{2}H''(N^*)\hat{N}^2(t) + \mathcal{O}(\hat{N}^3),
-\tag{4.12}\]</span></span> where we use <span class="math inline">\(H(N^*)=0\)</span> and assume the perturbation <span class="math inline">\(\hat{N}\)</span> is small to neglect all terms quadratic and higher, which yields the linear ODE, <span id="eq-noLabel"><span class="math display">\[
+\tag{12}\]</span></span> where we use <span class="math inline">\(H(N^*)=0\)</span> and assume the perturbation <span class="math inline">\(\hat{N}\)</span> is small to neglect all terms quadratic and higher, which yields the linear ODE, <span id="eq-noLabel"><span class="math display">\[
 \frac{d\hat{N}(t) }{dt} =  H'(N^*)\hat{N}(t)
-\tag{4.13}\]</span></span> with solution (by separation of variables), <span id="eq-noLabel"><span class="math display">\[
+\tag{13}\]</span></span> with solution (by separation of variables), <span id="eq-noLabel"><span class="math display">\[
 \hat{N}(t)=  \eta e^{H'(N^*) t}
-\tag{4.14}\]</span></span> where <span class="math inline">\(\eta\)</span> is some initial perturbation about the steady-state. We now have 3 phases in this linear regime,</p>
+\tag{14}\]</span></span> where <span class="math inline">\(\eta\)</span> is some initial perturbation about the steady-state. We now have 3 phases in this linear regime,</p>
 <ul>
 <li><span class="math inline">\(H'(N^*)&gt;0,\)</span> the pertubration grows exponentially fast and the steady-state is <strong>unstable</strong>.</li>
 <li><span class="math inline">\(H'(N^*)&lt;0,\)</span> the perturbation decays exponentially fast and the steady-state is <strong>stable</strong>.</li>
@@ -423,28 +279,28 @@ N(t)=N^*+\hat{N}(t),
 </ul>
 <p>Note that, for the discrete time case, our solutions could decay or grow montonically or oscillatory. This is no longer the case for the continous model (as it would require <span class="math inline">\(H'(N^*)\)</span> to change in time). So we only have monotonic decay or growth.</p>
 </section>
-<section id="graphical-solution" class="level3" data-number="4.2.4">
-<h3 data-number="4.2.4" class="anchored" data-anchor-id="graphical-solution"><span class="header-section-number">4.2.4</span> Graphical solution</h3>
+<section id="graphical-solution" class="level3">
+<h3 class="anchored" data-anchor-id="graphical-solution">Graphical solution</h3>
 <p>We can graphically identify steady-states and their stability by plotting <span class="math inline">\(dN/dt\)</span> against <span class="math inline">\(N(t)\)</span>. Steady-states arise at the roots of <span class="math inline">\(H(N)\)</span>. The sign of the derivative at a root determines its linear stability.</p>
 </section>
-<section id="bifurcation-diagrams" class="level3" data-number="4.2.5">
-<h3 data-number="4.2.5" class="anchored" data-anchor-id="bifurcation-diagrams"><span class="header-section-number">4.2.5</span> Bifurcation diagrams</h3>
+<section id="bifurcation-diagrams" class="level3">
+<h3 class="anchored" data-anchor-id="bifurcation-diagrams">Bifurcation diagrams</h3>
 <p>Bifurcations arise when the number of solutions or their stability changes at a given value of a model parameter. By plotting the steady state solutions against a model parameter and using annotation to represent stability of solutions we can obtain a bifurcation diagram.</p>
 <p>As an exercise perform a qualitative analysis of the Malthusian model.</p>
 </section>
 </section>
-<section id="the-logistic-growth-model" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="the-logistic-growth-model"><span class="header-section-number">4.3</span> The logistic growth model</h2>
-<section id="model-development" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="model-development"><span class="header-section-number">4.3.1</span> Model development</h3>
+<section id="the-logistic-growth-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-logistic-growth-model">The logistic growth model</h2>
+<section id="model-development" class="level3">
+<h3 class="anchored" data-anchor-id="model-development">Model development</h3>
 <p>Let <span class="math inline">\(N=N(t)\)</span>. The logistic model, due to Verhulst, takes the form <span id="eq-logisticode"><span class="math display">\[
 \frac{dN}{dt}=rN(t)\left (1-\frac{N(t)}{K}\right),
-\tag{4.15}\]</span></span></p>
+\tag{15}\]</span></span></p>
 <p>where <span class="math inline">\(r\)</span> is the linear growth rate and <span class="math inline">\(K\)</span> is carrying capacity. We consider both <span class="math inline">\(r,K\in \Re^+\)</span>.</p>
 <p>Questions to ask of such a model are: what type of biologically realistic solutions does it possess? Are there steady-states? If so, are they stable or unstable? Are there bifurcations in solutions?</p>
-<section id="numerical-solutions" class="level4" data-number="4.3.1.1">
-<h4 data-number="4.3.1.1" class="anchored" data-anchor-id="numerical-solutions"><span class="header-section-number">4.3.1.1</span> Numerical solutions</h4>
-<p>In <a href="#fig-logisticgrowthmodel" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> we present numerical solutions of equation using different initial conditions. Note the limiting behaviour of solutions as <span class="math inline">\(t\rightarrow \infty\)</span>. In <a href="#fig-logisticgrowthmodel" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> it is clear that even though some solutions are initialised at <span class="math inline">\(N_0=0.1\)</span>, much closer to <span class="math inline">\(N^*=0\)</span> than <span class="math inline">\(N^*=K\)</span>, they tend to the limit <span class="math inline">\(N=K\)</span>. Why do solutions not tend to <span class="math inline">\(N^*=0\)</span>?</p>
+<section id="numerical-solutions" class="level4">
+<h4 class="anchored" data-anchor-id="numerical-solutions">Numerical solutions</h4>
+<p>In <a href="#fig-logisticgrowthmodel" class="quarto-xref">Figure&nbsp;1</a> we present numerical solutions of equation using different initial conditions. Note the limiting behaviour of solutions as <span class="math inline">\(t\rightarrow \infty\)</span>. In <a href="#fig-logisticgrowthmodel" class="quarto-xref">Figure&nbsp;1</a> it is clear that even though some solutions are initialised at <span class="math inline">\(N_0=0.1\)</span>, much closer to <span class="math inline">\(N^*=0\)</span> than <span class="math inline">\(N^*=K\)</span>, they tend to the limit <span class="math inline">\(N=K\)</span>. Why do solutions not tend to <span class="math inline">\(N^*=0\)</span>?</p>
 <div id="cell-fig-logisticgrowthmodel" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
@@ -498,53 +354,53 @@ N(t)=N^*+\hat{N}(t),
 <img src="CtsTimeOnePop_files/figure-html/fig-logisticgrowthmodel-output-1.png" width="585" height="429" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logisticgrowthmodel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.1: Numerical solution of the logistic growth model
+Figure&nbsp;1: Numerical solution of the logistic growth model
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="dimensional-analysis-and-nondimensionalisation" class="level4" data-number="4.3.1.2">
-<h4 data-number="4.3.1.2" class="anchored" data-anchor-id="dimensional-analysis-and-nondimensionalisation"><span class="header-section-number">4.3.1.2</span> Dimensional analysis and nondimensionalisation</h4>
-<p><span class="math inline">\(N\)</span> represents the population density and has units of one over area (say <span class="math inline">\(1/m^2\)</span>) and <span class="math inline">\(t\)</span> has units of time (say, seconds, <span class="math inline">\(s\)</span>). Hence the left-hand side of <a href="#eq-logisticode" class="quarto-xref">Equation&nbsp;<span>4.15</span></a> has units of <span class="math inline">\(1/(m^2 s)\)</span>. The first term on the right-hand side of <a href="#eq-logisticode" class="quarto-xref">Equation&nbsp;<span>4.15</span></a> is <span class="math inline">\(rN\)</span>. <span class="math inline">\(N\)</span> has units <span class="math inline">\(1/m^2\)</span> hence the parameter <span class="math inline">\(r\)</span> must have units of <span class="math inline">\(1/s\)</span> for dimensional consistency. This is consistent as <span class="math inline">\(r\)</span> represents the linear growth rate.</p>
+<section id="dimensional-analysis-and-nondimensionalisation" class="level4">
+<h4 class="anchored" data-anchor-id="dimensional-analysis-and-nondimensionalisation">Dimensional analysis and nondimensionalisation</h4>
+<p><span class="math inline">\(N\)</span> represents the population density and has units of one over area (say <span class="math inline">\(1/m^2\)</span>) and <span class="math inline">\(t\)</span> has units of time (say, seconds, <span class="math inline">\(s\)</span>). Hence the left-hand side of <a href="#eq-logisticode" class="quarto-xref">Equation&nbsp;15</a> has units of <span class="math inline">\(1/(m^2 s)\)</span>. The first term on the right-hand side of <a href="#eq-logisticode" class="quarto-xref">Equation&nbsp;15</a> is <span class="math inline">\(rN\)</span>. <span class="math inline">\(N\)</span> has units <span class="math inline">\(1/m^2\)</span> hence the parameter <span class="math inline">\(r\)</span> must have units of <span class="math inline">\(1/s\)</span> for dimensional consistency. This is consistent as <span class="math inline">\(r\)</span> represents the linear growth rate.</p>
 <p>The second term has the form <span class="math inline">\(rN^2/K\)</span>. Given the chosen units for <span class="math inline">\(r\)</span> and <span class="math inline">\(N\)</span>, the parameter <span class="math inline">\(K\)</span> must have dimensions <span class="math inline">\(1/m^2\)</span>. Again, this is consistent as <span class="math inline">\(K\)</span> is a carrying capacity (i.e.&nbsp;it has units of population density).</p>
 <p>We define the nondimensionalised variables <span id="eq-noLabel"><span class="math display">\[
 n=\frac{N}{\tilde{N}} \ \ \ \ \ \ \tau=\frac{t}{\tilde{T}}
-\tag{4.16}\]</span></span> where <span class="math inline">\(\tilde{N}\)</span> and <span class="math inline">\(\tilde{T}\)</span> are constants that have units of population density and time, respectively. Hence <a href="#eq-logisticode" class="quarto-xref">Equation&nbsp;<span>4.15</span></a> transforms, upon change of variables, to <span id="eq-noLabel"><span class="math display">\[
+\tag{16}\]</span></span> where <span class="math inline">\(\tilde{N}\)</span> and <span class="math inline">\(\tilde{T}\)</span> are constants that have units of population density and time, respectively. Hence <a href="#eq-logisticode" class="quarto-xref">Equation&nbsp;15</a> transforms, upon change of variables, to <span id="eq-noLabel"><span class="math display">\[
 \begin{aligned}
 \frac{\tilde{N}}{\tilde{T} }\frac{dn}{d\tau}=r\tilde{N}n(1-\frac{n\tilde{N}}{K}).
 \end{aligned}
-\tag{4.17}\]</span></span></p>
+\tag{17}\]</span></span></p>
 <p>In the case of the logistic equation there is only one time scale and density scale in the problem, hence we choose <span id="eq-noLabel"><span class="math display">\[
 \tilde{T}=\frac{1}{r} \ \ \ and \ \ \ \tilde{N}=K
-\tag{4.18}\]</span></span> and the dimensionless model is <span id="eq-logisticnondim"><span class="math display">\[
+\tag{18}\]</span></span> and the dimensionless model is <span id="eq-logisticnondim"><span class="math display">\[
 \begin{aligned}
 \frac{dn}{d\tau}= n(1-n)
 \end{aligned}
-\tag{4.19}\]</span></span> Note that we can retrieve the original equation by rescaling and calculating <span class="math inline">\(N=\tilde{N}n\)</span> and <span class="math inline">\(t=\tilde{T}\tau\)</span>.</p>
+\tag{19}\]</span></span> Note that we can retrieve the original equation by rescaling and calculating <span class="math inline">\(N=\tilde{N}n\)</span> and <span class="math inline">\(t=\tilde{T}\tau\)</span>.</p>
 </section>
 </section>
-<section id="steady-states-and-linear-stability" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="steady-states-and-linear-stability"><span class="header-section-number">4.3.2</span> Steady states and linear stability</h3>
+<section id="steady-states-and-linear-stability" class="level3">
+<h3 class="anchored" data-anchor-id="steady-states-and-linear-stability">Steady states and linear stability</h3>
 <p>Steady states satisfy <span id="eq-noLabel"><span class="math display">\[
 n^*(1-n^*)=0.
-\tag{4.20}\]</span></span> Hence <span id="eq-noLabel"><span class="math display">\[
+\tag{20}\]</span></span> Hence <span id="eq-noLabel"><span class="math display">\[
 n^*=0, \ \ \ \ n^*=1.
-\tag{4.21}\]</span></span></p>
+\tag{21}\]</span></span></p>
 <p>To determine linear stability we compute <span id="eq-noLabel"><span class="math display">\[
 H'(n)= (1-2n).
-\tag{4.22}\]</span></span> When <span class="math inline">\(n=n^*=0\)</span> we obtain <span id="eq-noLabel"><span class="math display">\[
+\tag{22}\]</span></span> When <span class="math inline">\(n=n^*=0\)</span> we obtain <span id="eq-noLabel"><span class="math display">\[
 H'(n)= 1.
-\tag{4.23}\]</span></span> Hence the origin is an unstable steady-state.</p>
+\tag{23}\]</span></span> Hence the origin is an unstable steady-state.</p>
 <p>At the steady-state <span class="math inline">\(n^*=1\)</span> <span id="eq-noLabel"><span class="math display">\[
 H'(n^*)= -1
-\tag{4.24}\]</span></span> hence <span class="math inline">\(n^*=1\)</span> is linearly stable.</p>
-<p>Note that the linear stability analysis can explain the observations regarding the numeric solutions presented in <a href="#fig-logisticgrowthmodel" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>.</p>
+\tag{24}\]</span></span> hence <span class="math inline">\(n^*=1\)</span> is linearly stable.</p>
+<p>Note that the linear stability analysis can explain the observations regarding the numeric solutions presented in <a href="#fig-logisticgrowthmodel" class="quarto-xref">Figure&nbsp;1</a>.</p>
 </section>
-<section id="graphical-analysis" class="level3" data-number="4.3.3">
-<h3 data-number="4.3.3" class="anchored" data-anchor-id="graphical-analysis"><span class="header-section-number">4.3.3</span> Graphical analysis</h3>
-<p>In <a href="#fig-dlogisticrhs" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> we plot the right-hand side of <a href="#eq-logisticnondim" class="quarto-xref">Equation&nbsp;<span>4.19</span></a>. We can qualitatively describe model solutions by considering the arrow along the x axis. Suppose we consider an initial condition with <span class="math inline">\(0&lt;n_0&lt;1\)</span>. Using the graph of <span class="math inline">\(H(n)\)</span>, <span class="math inline">\(dn/d\tau\)</span> is positive, hence <span class="math inline">\(n\)</span> increases as a function of time until <span class="math inline">\(n(\tau)\rightarrow 1\)</span>.</p>
+<section id="graphical-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="graphical-analysis">Graphical analysis</h3>
+<p>In <a href="#fig-dlogisticrhs" class="quarto-xref">Figure&nbsp;2</a> we plot the right-hand side of <a href="#eq-logisticnondim" class="quarto-xref">Equation&nbsp;19</a>. We can qualitatively describe model solutions by considering the arrow along the x axis. Suppose we consider an initial condition with <span class="math inline">\(0&lt;n_0&lt;1\)</span>. Using the graph of <span class="math inline">\(H(n)\)</span>, <span class="math inline">\(dn/d\tau\)</span> is positive, hence <span class="math inline">\(n\)</span> increases as a function of time until <span class="math inline">\(n(\tau)\rightarrow 1\)</span>.</p>
 <div id="cell-fig-dlogisticrhs" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
@@ -570,78 +426,78 @@ H'(n^*)= -1
 <img src="CtsTimeOnePop_files/figure-html/fig-dlogisticrhs-output-1.png" width="609" height="429" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dlogisticrhs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.2: Right-hand side of the logistic ODE
+Figure&nbsp;2: Right-hand side of the logistic ODE
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="an-exact-solution" class="level3" data-number="4.3.4">
-<h3 data-number="4.3.4" class="anchored" data-anchor-id="an-exact-solution"><span class="header-section-number">4.3.4</span> An exact solution</h3>
+<section id="an-exact-solution" class="level3">
+<h3 class="anchored" data-anchor-id="an-exact-solution">An exact solution</h3>
 <p>Separation of variables yields <span id="eq-noLabel"><span class="math display">\[
 \int\frac{ dN}{N(1-\frac{N}{K})}=r\int dt.
-\tag{4.25}\]</span></span> Using partial fractions <span id="eq-noLabel"><span class="math display">\[
+\tag{25}\]</span></span> Using partial fractions <span id="eq-noLabel"><span class="math display">\[
 \int\frac{ dN}{N} + \frac{1}{K}\int\frac{ dN}{1-\frac{N}{K}}=r\int dt.
-\tag{4.26}\]</span></span> Integration yields, <span id="eq-noLabel"><span class="math display">\[
+\tag{26}\]</span></span> Integration yields, <span id="eq-noLabel"><span class="math display">\[
 \ln N - \ln\left(1-\frac{N}{K}\right)= \ln \frac{N }{1-\frac{N}{K}} =  rt+C.
-\tag{4.27}\]</span></span> Hence <span id="eq-noLabel"><span class="math display">\[
+\tag{27}\]</span></span> Hence <span id="eq-noLabel"><span class="math display">\[
 N=\frac{De^{rt}}{1+\frac{D}{K}e^{rt}}
-\tag{4.28}\]</span></span> Given an initial condition <span class="math inline">\(N(0)=N_0\)</span>, we obtain <span id="eq-noLabel"><span class="math display">\[
+\tag{28}\]</span></span> Given an initial condition <span class="math inline">\(N(0)=N_0\)</span>, we obtain <span id="eq-noLabel"><span class="math display">\[
 N(t)=\frac{N_0K e^{rt}}{K+N_0(e^{rt}-1)}
-\tag{4.29}\]</span></span></p>
-<section id="qualitative-analysis-of-the-exact-solution" class="level4" data-number="4.3.4.1">
-<h4 data-number="4.3.4.1" class="anchored" data-anchor-id="qualitative-analysis-of-the-exact-solution"><span class="header-section-number">4.3.4.1</span> Qualitative analysis of the exact solution</h4>
+\tag{29}\]</span></span></p>
+<section id="qualitative-analysis-of-the-exact-solution" class="level4">
+<h4 class="anchored" data-anchor-id="qualitative-analysis-of-the-exact-solution">Qualitative analysis of the exact solution</h4>
 <p>As <span class="math inline">\(t\rightarrow \infty\)</span>, <span class="math inline">\(N\rightarrow K\)</span>. At <span class="math inline">\(t=0\)</span>, <span class="math inline">\(N=N_0\)</span> and that for small <span class="math inline">\(N_0\ll K\)</span> the initial growth phase is exponential, i.e.&nbsp; <span id="eq-noLabel"><span class="math display">\[
 N(t)\sim N_0 e^{rt} \\ \ \ \ \ N_0\ll K, t\ll \frac{1}{r}.
-\tag{4.30}\]</span></span></p>
+\tag{30}\]</span></span></p>
 <p>Note that in almost all the models that we will consider the above method is not an usually an option as the ODE is not explicitly integrable.</p>
 </section>
 </section>
 </section>
-<section id="the-spruce-budworm-model" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="the-spruce-budworm-model"><span class="header-section-number">4.4</span> The spruce budworm model</h2>
+<section id="the-spruce-budworm-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-spruce-budworm-model">The spruce budworm model</h2>
 <p>The spruce budworm is a destructive and widely distributed forest defoliator in North America. Massive outbreaks occur periodically and can destroy large quantities of valuable spruce and fir. To understand the outbreak behaviour and develop and management strategies, a series of mathematical models have been developed, beginning with <span class="citation" data-cites="ludwig1978qualitative"><span class="nocase">Ludwig et al.</span> (<a href="#ref-ludwig1978qualitative" role="doc-biblioref">1978</a>)</span>. The goal of the models is to explain the qualitative pattern of sudden outbreaks and then a sudden collapse.</p>
-<section id="model-development-1" class="level3" data-number="4.4.1">
-<h3 data-number="4.4.1" class="anchored" data-anchor-id="model-development-1"><span class="header-section-number">4.4.1</span> Model development</h3>
+<section id="model-development-1" class="level3">
+<h3 class="anchored" data-anchor-id="model-development-1">Model development</h3>
 <p>Letting <span class="math inline">\(N(t)\)</span> represent the population size at time <span class="math inline">\(t\)</span>, it is assumed that budworm exhibits logistic growth and is subject to predation at rate <span class="math inline">\(p(N)\)</span>. A governing ordinary differential equation is given by <span id="eq-sprucebudworm"><span class="math display">\[
 \frac{dN }{dt}= r_B N\left(1-\frac{N}{K_B}\right)-p(N),
-\tag{4.31}\]</span></span> where <span id="eq-noLabel"><span class="math display">\[
+\tag{31}\]</span></span> where <span id="eq-noLabel"><span class="math display">\[
 p(N) =\frac{B N^2}{A^2 +N^2},
-\tag{4.32}\]</span></span> <span class="math inline">\(r_B\)</span> is the linear growth rate, <span class="math inline">\(K_B\)</span> is the carrying capacity, <span class="math inline">\(B\)</span> is the maximum rate of predation and <span class="math inline">\(A\)</span> is a measure of budworm population where predation switches on (specifically, <span class="math inline">\(A\)</span> represents the budworm density at which predation is half its maximum value).</p>
+\tag{32}\]</span></span> <span class="math inline">\(r_B\)</span> is the linear growth rate, <span class="math inline">\(K_B\)</span> is the carrying capacity, <span class="math inline">\(B\)</span> is the maximum rate of predation and <span class="math inline">\(A\)</span> is a measure of budworm population where predation switches on (specifically, <span class="math inline">\(A\)</span> represents the budworm density at which predation is half its maximum value).</p>
 <p>It is informative to graph the predation term <span id="eq-noLabel"><span class="math display">\[
 p(N) =\frac{B N^2}{A^2 +N^2},
-\tag{4.33}\]</span></span> and annotate the parameters <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.</p>
+\tag{33}\]</span></span> and annotate the parameters <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.</p>
 <p>There is a root at <span class="math inline">\(N=0\)</span>. In the limit <span class="math inline">\(N\rightarrow \infty\)</span>, <span class="math inline">\(p \rightarrow B\)</span>. Note that for <span class="math inline">\(N=A\)</span>, <span class="math inline">\(p(A)=B/2\)</span>. The derivative is <span id="eq-noLabel"><span class="math display">\[
 p'(N)=\frac{2BN}{A^2+N^2} - \frac{2BN^3}{(A^2+N^2)^2} =  \frac{2BA^2N}{(A^2+N^2)^2}
-\tag{4.34}\]</span></span> Thus there is a turning point at <span class="math inline">\(N=0\)</span> and <span class="math inline">\(p'&gt;0 \forall N&gt;0\)</span>.</p>
+\tag{34}\]</span></span> Thus there is a turning point at <span class="math inline">\(N=0\)</span> and <span class="math inline">\(p'&gt;0 \forall N&gt;0\)</span>.</p>
 </section>
-<section id="nondimensionalisation" class="level3" data-number="4.4.2">
-<h3 data-number="4.4.2" class="anchored" data-anchor-id="nondimensionalisation"><span class="header-section-number">4.4.2</span> Nondimensionalisation</h3>
+<section id="nondimensionalisation" class="level3">
+<h3 class="anchored" data-anchor-id="nondimensionalisation">Nondimensionalisation</h3>
 <p>Introducing the (as yet unspecified) dimensional scalings <span class="math inline">\(\tilde{N}\)</span> and <span class="math inline">\(\tilde{T}\)</span>, the model is nondimensionalised as follows</p>
 <p><span id="eq-noLabel"><span class="math display">\[
 n=\frac{N}{\tilde{N}} \ \ \ \ \ \ \tau=\frac{t}{\tilde{T}}.
-\tag{4.35}\]</span></span></p>
-<p>Changing variables in <a href="#eq-sprucebudworm" class="quarto-xref">Equation&nbsp;<span>4.31</span></a> yields</p>
+\tag{35}\]</span></span></p>
+<p>Changing variables in <a href="#eq-sprucebudworm" class="quarto-xref">Equation&nbsp;31</a> yields</p>
 <p><span id="eq-noLabel"><span class="math display">\[
 \frac{\tilde{N}}{\tilde{T}}\frac{d n }{d\tau}= r_B \tilde{N}n\left(1-\frac{\tilde{N}n}{K_B}\right)-\frac{B\tilde{N}^2n^2}{A^2+\tilde{N}^2 n^2}.
-\tag{4.36}\]</span></span></p>
+\tag{36}\]</span></span></p>
 <p>After some tidying</p>
 <p><span id="eq-noLabel"><span class="math display">\[
 \frac{dn }{d\tau}= r_B\tilde{T} n\left(1-\frac{\tilde{N}n}{K_B}\right)-\frac{B\tilde{N} \tilde{T}}{A^2}\frac{n^2}{1+\frac{\tilde{N}^2}{A^2}n^2}.
-\tag{4.37}\]</span></span></p>
+\tag{37}\]</span></span></p>
 <p>A natural scale for cell density in the model is given by the parameter <span class="math inline">\(A\)</span>, as it determines the density of budworm at which predation is half its maximal value. Hence we choose the scaling on the budworm density <span id="eq-noLabel"><span class="math display">\[
 \tilde{N}=A.
-\tag{4.38}\]</span></span> Similarly, a natural time scale for the model is given by<br>
+\tag{38}\]</span></span> Similarly, a natural time scale for the model is given by<br>
 <span id="eq-noLabel"><span class="math display">\[
 \tilde{T}=A/B.
-\tag{4.39}\]</span></span></p>
+\tag{39}\]</span></span></p>
 <p>Substituting for <span class="math inline">\(\tilde{N}\)</span> and <span class="math inline">\(\tilde{T}\)</span> yields <span id="eq-budwormnondim"><span class="math display">\[
 \frac{dn }{d\tau}= rn\left(1-\frac{n}{q}\right)-\frac{n^2}{1+n^2} = H(n),
-\tag{4.40}\]</span></span> where we define the nondimensional parameters <span id="eq-noLabel"><span class="math display">\[
+\tag{40}\]</span></span> where we define the nondimensional parameters <span id="eq-noLabel"><span class="math display">\[
 r= \frac{r_B A}{B} \ \ \  \textrm{and} \ \ \  q=\frac{K_B}{A}.
-\tag{4.41}\]</span></span></p>
-<p>Note that <a href="#eq-budwormnondim" class="quarto-xref">Equation&nbsp;<span>4.40</span></a> has two nondimensional parameters and all variables are dimensionless. See <a href="#fig-sprucebudworm-rhs" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> for a plot of right-hand side of equation <a href="#eq-budwormnondim" class="quarto-xref">Equation&nbsp;<span>4.40</span></a>. What kind of behaviours do you expect to see from the model?</p>
+\tag{41}\]</span></span></p>
+<p>Note that <a href="#eq-budwormnondim" class="quarto-xref">Equation&nbsp;40</a> has two nondimensional parameters and all variables are dimensionless. See <a href="#fig-sprucebudworm-rhs" class="quarto-xref">Figure&nbsp;3</a> for a plot of right-hand side of equation <a href="#eq-budwormnondim" class="quarto-xref">Equation&nbsp;40</a>. What kind of behaviours do you expect to see from the model?</p>
 <div id="cell-fig-sprucebudworm-rhs" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
@@ -692,17 +548,17 @@ r= \frac{r_B A}{B} \ \ \  \textrm{and} \ \ \  q=\frac{K_B}{A}.
 <img src="CtsTimeOnePop_files/figure-html/fig-sprucebudworm-rhs-output-1.png" width="601" height="429" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sprucebudworm-rhs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.3: RHS of spr. budworm model
+Figure&nbsp;3: RHS of spr. budworm model
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="numerical-solutions-1" class="level3" data-number="4.4.3">
-<h3 data-number="4.4.3" class="anchored" data-anchor-id="numerical-solutions-1"><span class="header-section-number">4.4.3</span> Numerical solutions</h3>
-<p>In <a href="#fig-sprucebudworm-numsol" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> we plot some numerical solutions of <a href="#eq-budwormnondim" class="quarto-xref">Equation&nbsp;<span>4.40</span></a> at different values of the parameter <span class="math inline">\(r\)</span>.</p>
-<p>Numerical solutions of <a href="#eq-budwormnondim" class="quarto-xref">Equation&nbsp;<span>4.40</span></a> indicate that there is a single stable steady state when <span class="math inline">\(r\)</span> is both small and large but for intermediate values of <span class="math inline">\(r\)</span> there are two stable steady states.</p>
+<section id="numerical-solutions-1" class="level3">
+<h3 class="anchored" data-anchor-id="numerical-solutions-1">Numerical solutions</h3>
+<p>In <a href="#fig-sprucebudworm-numsol" class="quarto-xref">Figure&nbsp;4</a> we plot some numerical solutions of <a href="#eq-budwormnondim" class="quarto-xref">Equation&nbsp;40</a> at different values of the parameter <span class="math inline">\(r\)</span>.</p>
+<p>Numerical solutions of <a href="#eq-budwormnondim" class="quarto-xref">Equation&nbsp;40</a> indicate that there is a single stable steady state when <span class="math inline">\(r\)</span> is both small and large but for intermediate values of <span class="math inline">\(r\)</span> there are two stable steady states.</p>
 <p>Our goal is to analyse the model and understand why different parameter values yield these strikingly different model behaviours.</p>
 <div id="cell-fig-sprucebudworm-numsol" class="cell" data-execution_count="4">
 <details class="code-fold">
@@ -736,40 +592,40 @@ Figure&nbsp;4.3: RHS of spr. budworm model
 <img src="CtsTimeOnePop_files/figure-html/fig-sprucebudworm-numsol-output-1.png" width="585" height="429" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sprucebudworm-numsol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.4: Numerical solution of spr. budworm model
+Figure&nbsp;4: Numerical solution of spr. budworm model
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="steady-state-analysis" class="level3" data-number="4.4.4">
-<h3 data-number="4.4.4" class="anchored" data-anchor-id="steady-state-analysis"><span class="header-section-number">4.4.4</span> Steady state analysis</h3>
-<p>Letting <span class="math inline">\(n^*\)</span> represent steady states of <a href="#eq-budwormnondim" class="quarto-xref">Equation&nbsp;<span>4.40</span></a> yields <span id="eq-noLabel"><span class="math display">\[
+<section id="steady-state-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="steady-state-analysis">Steady state analysis</h3>
+<p>Letting <span class="math inline">\(n^*\)</span> represent steady states of <a href="#eq-budwormnondim" class="quarto-xref">Equation&nbsp;40</a> yields <span id="eq-noLabel"><span class="math display">\[
 rn^*(1-\frac{n^*}{q})- \frac{n^*{^2}}{1+n^*{^2}}=0.
-\tag{4.42}\]</span></span> Hence either <span id="eq-noLabel"><span class="math display">\[
+\tag{42}\]</span></span> Hence either <span id="eq-noLabel"><span class="math display">\[
 n^*=0,
-\tag{4.43}\]</span></span> or <span class="math inline">\(n^*\)</span> satisfies the cubic equation <span id="eq-noLabel"><span class="math display">\[
+\tag{43}\]</span></span> or <span class="math inline">\(n^*\)</span> satisfies the cubic equation <span id="eq-noLabel"><span class="math display">\[
 r\left(1-\frac{n^*}{q}\right)- \frac{n^*}{1+n^*{^2}}=0.
-\tag{4.44}\]</span></span> Explicit solutions to such a cubic can be immediately written down but they are cumbersome to work with. We proceed using a graphical/qualitative approach.</p>
+\tag{44}\]</span></span> Explicit solutions to such a cubic can be immediately written down but they are cumbersome to work with. We proceed using a graphical/qualitative approach.</p>
 <p>Define <span id="eq-sprucebudwormfgn"><span class="math display">\[
 f(n^*)=r\left(1-\frac{n^*}{q}\right) \ \ \textrm{and} \ \ g(n^*)=\frac{n^*}{1+n^*{^2}}.
-\tag{4.45}\]</span></span> Roots occur for values of <span class="math inline">\(n^*\)</span> that satisfy <span class="math inline">\(f=g\)</span>.</p>
-<p>In <a href="#fig-sprucebudworm-rhsfg" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> (a) we fix the parameter <span class="math inline">\(q=10\)</span> and consider model behaviour as a function of the parameter <span class="math inline">\(r\)</span>. When <span class="math inline">\(r\gg1\)</span> there is a nonzero steady-state corresponding to <span class="math inline">\(n^*\gg 1\)</span>. When <span class="math inline">\(r\ll1\)</span> there is a nonzero steady-state corresponding to <span class="math inline">\(n^*\ll 1\)</span>. In the intermediate case there can be three intersection points.</p>
+\tag{45}\]</span></span> Roots occur for values of <span class="math inline">\(n^*\)</span> that satisfy <span class="math inline">\(f=g\)</span>.</p>
+<p>In <a href="#fig-sprucebudworm-rhsfg" class="quarto-xref">Figure&nbsp;5</a> (a) we fix the parameter <span class="math inline">\(q=10\)</span> and consider model behaviour as a function of the parameter <span class="math inline">\(r\)</span>. When <span class="math inline">\(r\gg1\)</span> there is a nonzero steady-state corresponding to <span class="math inline">\(n^*\gg 1\)</span>. When <span class="math inline">\(r\ll1\)</span> there is a nonzero steady-state corresponding to <span class="math inline">\(n^*\ll 1\)</span>. In the intermediate case there can be three intersection points.</p>
 <p>We can use the curve sketching techniques form Tutorial Sheet 1 to sketch <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span>.</p>
 <p><span class="math inline">\(f\)</span> is linear. There is a root at <span class="math inline">\(n^*=q\)</span>. The derivative is <span class="math inline">\(-r/q\)</span>. <span class="math inline">\(f(0)\)</span>=r. <span class="math inline">\(g\)</span> has a unique root at <span class="math inline">\(n^*=0\)</span>. The derivative is <span id="eq-noLabel"><span class="math display">\[
 g'=\frac{1-n{^*}^2}{(1+n^*)^2}.
-\tag{4.46}\]</span></span> There is a turning point at <span class="math inline">\(n^*=1\)</span>. Here <span class="math inline">\(g=1/2\)</span>. As <span class="math inline">\(n^*\rightarrow \infty\)</span>, <span class="math inline">\(g\rightarrow 0\)</span>. <span class="math inline">\(f'(0)=1\)</span>.</p>
+\tag{46}\]</span></span> There is a turning point at <span class="math inline">\(n^*=1\)</span>. Here <span class="math inline">\(g=1/2\)</span>. As <span class="math inline">\(n^*\rightarrow \infty\)</span>, <span class="math inline">\(g\rightarrow 0\)</span>. <span class="math inline">\(f'(0)=1\)</span>.</p>
 </section>
-<section id="linear-stability-analysis-1" class="level3" data-number="4.4.5">
-<h3 data-number="4.4.5" class="anchored" data-anchor-id="linear-stability-analysis-1"><span class="header-section-number">4.4.5</span> Linear stability analysis</h3>
+<section id="linear-stability-analysis-1" class="level3">
+<h3 class="anchored" data-anchor-id="linear-stability-analysis-1">Linear stability analysis</h3>
 <p>The linear stability of the model is determined by the quantity <span id="eq-noLabel"><span class="math display">\[
 H'(n)=r(1-\frac{2n}{q})-\frac{2{n}}{1+{n}^2} +\frac{2{n}^3}{(1+{n}^2)^2}.
-\tag{4.47}\]</span></span></p>
+\tag{47}\]</span></span></p>
 <p>Hence at the steady state <span class="math inline">\(n^*=0\)</span> <span id="eq-noLabel"><span class="math display">\[
 H'(0)=r
-\tag{4.48}\]</span></span> and the steady state is linearly unstable.</p>
-<p>Given the nonzero steady states have not been calculated explicitly, we proceed using graphical analysis of stability. In <a href="#fig-sprucebudworm-rhsfg" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> (b) we plot the right-hand side of <a href="#eq-budwormnondim" class="quarto-xref">Equation&nbsp;<span>4.40</span></a> against <span class="math inline">\(n\)</span> and examine the cases of large, small and intermediate <span class="math inline">\(r\)</span> for a given value of <span class="math inline">\(q\)</span>.</p>
+\tag{48}\]</span></span> and the steady state is linearly unstable.</p>
+<p>Given the nonzero steady states have not been calculated explicitly, we proceed using graphical analysis of stability. In <a href="#fig-sprucebudworm-rhsfg" class="quarto-xref">Figure&nbsp;5</a> (b) we plot the right-hand side of <a href="#eq-budwormnondim" class="quarto-xref">Equation&nbsp;40</a> against <span class="math inline">\(n\)</span> and examine the cases of large, small and intermediate <span class="math inline">\(r\)</span> for a given value of <span class="math inline">\(q\)</span>.</p>
 <p>When <span class="math inline">\(r\)</span> is both large and small the nonzero steady state is stable (the derivative at the roots is negative). In the case where three biologically relevant roots exist, the intermediate root is unstable.</p>
 <div id="cell-fig-sprucebudworm-rhsfg" class="cell" data-execution_count="5">
 <details class="code-fold">
@@ -841,38 +697,38 @@ H'(0)=r
 <img src="CtsTimeOnePop_files/figure-html/fig-sprucebudworm-rhsfg-output-1.png" width="660" height="470" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sprucebudworm-rhsfg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.5: RHS of spr. budworm model
+Figure&nbsp;5: RHS of spr. budworm model
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="bifurcation-analysis" class="level3" data-number="4.4.6">
-<h3 data-number="4.4.6" class="anchored" data-anchor-id="bifurcation-analysis"><span class="header-section-number">4.4.6</span> Bifurcation analysis</h3>
+<section id="bifurcation-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="bifurcation-analysis">Bifurcation analysis</h3>
 <p>The goal is to identify boundaries of <span class="math inline">\(rq\)</span> parameter space where the stability changes occur and/or the number of steady states changes.</p>
 <p>We can define points in <span class="math inline">\(rq\)</span> parameter space where bifurcations arise by seeking values of <span class="math inline">\(n^*\)</span> that satisfy <span id="eq-noLabel"><span class="math display">\[
 f(n^*)= g(n^*) \ \ \ \  f'(n^*)= g'(n^*).
-\tag{4.49}\]</span></span></p>
+\tag{49}\]</span></span></p>
 <p>The first of these equations yields <span id="eq-rqeqn1"><span class="math display">\[
   r(1-\frac{n^*}{q}) = \frac{n^*}{1+n{^*}^{2}},
-\tag{4.50}\]</span></span> and the latter yields <span id="eq-rqeqn2"><span class="math display">\[
+\tag{50}\]</span></span> and the latter yields <span id="eq-rqeqn2"><span class="math display">\[
 -\frac{r}{q}=\frac{1}{1+n{^*}^{2}}-\frac{2n{^*}^{2}}{(1+n{^*})^2} = \frac{1-n{^*}^{2}}{(1+n{^*}^{2})^2}.
-\tag{4.51}\]</span></span></p>
+\tag{51}\]</span></span></p>
 <p>Hence <span id="eq-noLabel"><span class="math display">\[
    \frac{r}{q}= \frac{n{^*}^{2}-1}{(1+n{^*}^{2})^2}.
-\tag{4.52}\]</span></span></p>
+\tag{52}\]</span></span></p>
 <p>Substituting for <span class="math inline">\(r/q\)</span> in the first equation yields <span id="eq-noLabel"><span class="math display">\[
 r-\frac{n{^*}^{2}-1}{(1+n{^*}^{2})^2}n^*=\frac{n^*}{1+n{^*}^{2}},
-\tag{4.53}\]</span></span> which can be written in the form <span id="eq-noLabel"><span class="math display">\[
+\tag{53}\]</span></span> which can be written in the form <span id="eq-noLabel"><span class="math display">\[
 r=\frac{2n{^*}^{3}}{(1+n{^*}^{2})^2}.
-\tag{4.54}\]</span></span> Substituting for <span class="math inline">\(r\)</span> in <a href="#eq-rqeqn1" class="quarto-xref">Equation&nbsp;<span>4.50</span></a> yields <span id="eq-noLabel"><span class="math display">\[
+\tag{54}\]</span></span> Substituting for <span class="math inline">\(r\)</span> in <a href="#eq-rqeqn1" class="quarto-xref">Equation&nbsp;50</a> yields <span id="eq-noLabel"><span class="math display">\[
 \frac{2n{^*}^{3}}{(1+n{^*}^{2})^2}=\frac{2n{^*}^{3}}{(1+n{^*}^{2})^2}\frac{n^*}{q}+\frac{n^*}{1+n{^*}^2}
-\tag{4.55}\]</span></span> which, after some algebra, yields <span id="eq-sprucebudwormqpara"><span class="math display">\[
+\tag{55}\]</span></span> which, after some algebra, yields <span id="eq-sprucebudwormqpara"><span class="math display">\[
 q=\frac{2n{^*}^3}{n{^*}^{2}-1}.
-\tag{4.56}\]</span></span> Hence a set of points that define bifurcations where three steady states transform to a single steady state are given in parametric form in <span class="math inline">\(qr\)</span> parameter space by <span id="eq-noLabel"><span class="math display">\[
+\tag{56}\]</span></span> Hence a set of points that define bifurcations where three steady states transform to a single steady state are given in parametric form in <span class="math inline">\(qr\)</span> parameter space by <span id="eq-noLabel"><span class="math display">\[
 \left(\frac{2n{^*}^3}{n{^*}^{2}-1},\frac{2n{^*}^{3}}{(1+n{^*}^{2})^2}\right) \ \ \ \ \ \ \ n^*&gt;1.
-\tag{4.57}\]</span></span></p>
+\tag{57}\]</span></span></p>
 <div id="cell-fig-sprucebudworm-rq" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
@@ -908,39 +764,39 @@ q=\frac{2n{^*}^3}{n{^*}^{2}-1}.
 <img src="CtsTimeOnePop_files/figure-html/fig-sprucebudworm-rq-output-1.png" width="602" height="429" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sprucebudworm-rq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.6: Bifurcations in the rq plane
+Figure&nbsp;6: Bifurcations in the rq plane
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>By varying values of <span class="math inline">\(n^*\)</span> in <a href="#fig-sprucebudworm-rq" class="quarto-xref">Figure&nbsp;<span>4.6</span></a> we plot a region of instability. Note for example that <span class="math inline">\(q\rightarrow \infty\)</span> as <span class="math inline">\(n^*\rightarrow 1\)</span> and as <span class="math inline">\(n^*\rightarrow \infty\)</span>. Note also that in these limits <span class="math inline">\(r\)</span> must take the value 1/2 and 0, respectively.</p>
-<p>We can show that the cusp in <a href="#fig-sprucebudworm-rq" class="quarto-xref">Figure&nbsp;<span>4.6</span></a> is given by <span id="eq-noLabel"><span class="math display">\[
+<p>By varying values of <span class="math inline">\(n^*\)</span> in <a href="#fig-sprucebudworm-rq" class="quarto-xref">Figure&nbsp;6</a> we plot a region of instability. Note for example that <span class="math inline">\(q\rightarrow \infty\)</span> as <span class="math inline">\(n^*\rightarrow 1\)</span> and as <span class="math inline">\(n^*\rightarrow \infty\)</span>. Note also that in these limits <span class="math inline">\(r\)</span> must take the value 1/2 and 0, respectively.</p>
+<p>We can show that the cusp in <a href="#fig-sprucebudworm-rq" class="quarto-xref">Figure&nbsp;6</a> is given by <span id="eq-noLabel"><span class="math display">\[
 \left(q,r\right)=\left(3^{\frac{3}{2}},\left(\frac{\sqrt{3}}{2}\right)^3\right).
-\tag{4.58}\]</span></span></p>
+\tag{58}\]</span></span></p>
 <p>Note that <span class="math inline">\(r\)</span> is a decreasing function of <span class="math inline">\(q\)</span> for <span class="math inline">\(1&lt;n^*&lt;\sqrt{3}\)</span> but that <span class="math inline">\(r\)</span> is an increasing function of <span class="math inline">\(n^*\)</span> for <span class="math inline">\(\sqrt{3}&lt;n^*&lt;\infty\)</span>. This can be shown by finding the turning points of <span class="math inline">\(r\)</span> w.r.t <span class="math inline">\(n^*\)</span>, i.e. Given that <span id="eq-noLabel"><span class="math display">\[
 r=\frac{2n{^*}^{3}}{(1+n{^*}^{2})^2},
-\tag{4.59}\]</span></span> differentiation with respect to <span class="math inline">\(n^*\)</span> yields <span id="eq-noLabel"><span class="math display">\[
+\tag{59}\]</span></span> differentiation with respect to <span class="math inline">\(n^*\)</span> yields <span id="eq-noLabel"><span class="math display">\[
 \frac{dr}{dn^*}=\frac{6{n^*}^2}{(1+n^*)^2} - \frac{8n{^*}^4}{(1+n^*)^3}.
-\tag{4.60}\]</span></span> The turning point satisfies <span id="eq-noLabel"><span class="math display">\[
+\tag{60}\]</span></span> The turning point satisfies <span id="eq-noLabel"><span class="math display">\[
 \frac{6{n^*}^2}{(1+n^*)^2} - \frac{8n{^*}^4}{(1+n^*)^3}=0
-\tag{4.61}\]</span></span> Solving for <span class="math inline">\(n^*\)</span> yields <span id="eq-noLabel"><span class="math display">\[
+\tag{61}\]</span></span> Solving for <span class="math inline">\(n^*\)</span> yields <span id="eq-noLabel"><span class="math display">\[
 6(1+{n^*}^2) - 8n{^*}^2=0
-\tag{4.62}\]</span></span> Hence <span id="eq-noLabel"><span class="math display">\[
+\tag{62}\]</span></span> Hence <span id="eq-noLabel"><span class="math display">\[
   n^*=\sqrt{3}.
-\tag{4.63}\]</span></span> Thus there is a turning point that minimises <span class="math inline">\(r\)</span> at <span class="math inline">\(n^*=\sqrt{3}\)</span>.</p>
+\tag{63}\]</span></span> Thus there is a turning point that minimises <span class="math inline">\(r\)</span> at <span class="math inline">\(n^*=\sqrt{3}\)</span>.</p>
 <p>Substitution for this value of <span class="math inline">\(n^*\)</span> yields <span id="eq-noLabel"><span class="math display">\[
 \left(q,r\right)=\left(3^{\frac{3}{2}},\left(\frac{\sqrt{3}}{2}\right)^3\right).
-\tag{4.64}\]</span></span> See <a href="#fig-sprucebudworm-rq" class="quarto-xref">Figure&nbsp;<span>4.6</span></a>.</p>
+\tag{64}\]</span></span> See <a href="#fig-sprucebudworm-rq" class="quarto-xref">Figure&nbsp;6</a>.</p>
 </section>
-<section id="hysteresis" class="level3" data-number="4.4.7">
-<h3 data-number="4.4.7" class="anchored" data-anchor-id="hysteresis"><span class="header-section-number">4.4.7</span> Hysteresis</h3>
+<section id="hysteresis" class="level3">
+<h3 class="anchored" data-anchor-id="hysteresis">Hysteresis</h3>
 <p>Finally, rearranging the steady-state equation <span class="math display">\[
   r(1-\frac{n^*}{q}) = \frac{n^*}{1+n{^*}^{2}},
 \]</span> we obtain <span id="eq-sprucebudwormrpara"><span class="math display">\[
    r = \frac{n^*}{(1+n{^*}^{2})(1-\frac{n^*}{q})}.
-\tag{4.65}\]</span></span></p>
-<p>Considering <span class="math inline">\(n^*&lt;q\)</span> we compute <span class="math inline">\(r\)</span>; plotting <span class="math inline">\(n^*\)</span> against <span class="math inline">\(r\)</span> yields the bifurcation curve presented in <a href="#fig-sprucebudworm-bfc" class="quarto-xref">Figure&nbsp;<span>4.7</span></a>.</p>
+\tag{65}\]</span></span></p>
+<p>Considering <span class="math inline">\(n^*&lt;q\)</span> we compute <span class="math inline">\(r\)</span>; plotting <span class="math inline">\(n^*\)</span> against <span class="math inline">\(r\)</span> yields the bifurcation curve presented in <a href="#fig-sprucebudworm-bfc" class="quarto-xref">Figure&nbsp;7</a>.</p>
 <div id="cell-fig-sprucebudworm-bfc" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
@@ -980,7 +836,7 @@ r=\frac{2n{^*}^{3}}{(1+n{^*}^{2})^2},
 <img src="CtsTimeOnePop_files/figure-html/fig-sprucebudworm-bfc-output-1.png" width="601" height="429" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sprucebudworm-bfc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.7: Bifurcations in the rq plane
+Figure&nbsp;7: Bifurcations in the rq plane
 </figcaption>
 </figure>
 </div>
@@ -3121,13 +2977,13 @@ AAACsgAAAMsAAAHRAAABnQAAAccAAAKhAAAA6QAAAJMAAAHDAAADHAAAAQ4AAAB6AAAApgAAAnAA
 AAEzAAAAowAAAJAAAAKAAAABEgAAAJMAAADBAAABFgAAAlIAAAExAAAAigAAAL4AAAJKAAABFAAA
 AJgAAACKAAAB7QAAAREAAACTAAAA2gAAAUQAAADZAAAAFHN0Y28AAAAAAAAAAQAAADAAAABhdWR0
 YQAAAFltZXRhAAAAAAAAACFoZGxyAAAAAAAAAABtZGlyYXBwbAAAAAAAAAAAAAAAACxpbHN0AAAA
-JKl0b28AAAAcZGF0YQAAAAEAAAAATGF2ZjYyLjMuMTAw
+JKl0b28AAAAcZGF0YQAAAAEAAAAATGF2ZjYzLjEuMTAx
 ">
   Your browser does not support the video tag.
 </video>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hysteresis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.8: Animation demonstrating hysteresis as <span class="math inline">\(r\)</span> increases (picks left stable critical point) and decreases (picks right stable critical point).
+Figure&nbsp;8: Animation demonstrating hysteresis as <span class="math inline">\(r\)</span> increases (picks left stable critical point) and decreases (picks right stable critical point).
 </figcaption>
 </figure>
 </div>
@@ -3139,95 +2995,95 @@ Figure&nbsp;4.8: Animation demonstrating hysteresis as <span class="math inline"
 <p>Suppose we continue to decrease <span class="math inline">\(r\)</span> until eventually <span class="math inline">\(r&lt;r_1\)</span>. We return to the case where the system has only a single stable steady state.</p>
 </section>
 </section>
-<section id="harvesting" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="harvesting"><span class="header-section-number">4.5</span> Harvesting</h2>
+<section id="harvesting" class="level2">
+<h2 class="anchored" data-anchor-id="harvesting">Harvesting</h2>
 <p>By introducing terms that represent harvesting, population models can be used to investigate management strategies for resource management. The modelling problem is to maximise the sustained yield.</p>
 <p>Consider a model for logistic growth supplemented with a harvesting term <span id="eq-noLabel"><span class="math display">\[
 \frac{dN}{dt}=rN\left(1-\frac{N}{K}\right) - EN.
-\tag{4.66}\]</span></span> The term <span class="math inline">\(EN\)</span> is the harvesting yield per unit time and the constant <span class="math inline">\(E\)</span> represents the harvesting effort.</p>
+\tag{66}\]</span></span> The term <span class="math inline">\(EN\)</span> is the harvesting yield per unit time and the constant <span class="math inline">\(E\)</span> represents the harvesting effort.</p>
 <p>Steady states satisfy <span id="eq-noLabel"><span class="math display">\[
 rN^*\left(1-\frac{N^*}{K}\right) - EN^*=0
-\tag{4.67}\]</span></span> Thus either <span class="math inline">\(N^*=0\)</span> or <span id="eq-noLabel"><span class="math display">\[
+\tag{67}\]</span></span> Thus either <span class="math inline">\(N^*=0\)</span> or <span id="eq-noLabel"><span class="math display">\[
 \left(1-\frac{N^*}{K}\right) -E=0
-\tag{4.68}\]</span></span> Hence <span id="eq-noLabel"><span class="math display">\[
+\tag{68}\]</span></span> Hence <span id="eq-noLabel"><span class="math display">\[
 N^*=K(1-\frac{E}{r}).
-\tag{4.69}\]</span></span> Note that this is positive only if <span id="eq-noLabel"><span class="math display">\[
+\tag{69}\]</span></span> Note that this is positive only if <span id="eq-noLabel"><span class="math display">\[
 E&lt;r.
-\tag{4.70}\]</span></span> Thus if the harvesting rate exceeds the linear growth rate the only steady state corresponds to extinction.</p>
+\tag{70}\]</span></span> Thus if the harvesting rate exceeds the linear growth rate the only steady state corresponds to extinction.</p>
 <p>The yield is, <span id="eq-noLabel"><span class="math display">\[
 Y(E)=EN^*=EK(1-\frac{E}{r})
-\tag{4.71}\]</span></span></p>
+\tag{71}\]</span></span></p>
 <p>To maximise the yields we differentiate with respect to <span class="math inline">\(E\)</span>. <span id="eq-noLabel"><span class="math display">\[
 \frac{dY}{dE} = K - 2\frac{EK}{r}.
-\tag{4.72}\]</span></span> Thus the maximum yield is identified by setting <span id="eq-noLabel"><span class="math display">\[
+\tag{72}\]</span></span> Thus the maximum yield is identified by setting <span id="eq-noLabel"><span class="math display">\[
 \frac{dY}{dE} = K - 2\frac{EK}{r}=0.
-\tag{4.73}\]</span></span> THe maximum occurs at harvesting rate <span id="eq-noLabel"><span class="math display">\[
+\tag{73}\]</span></span> THe maximum occurs at harvesting rate <span id="eq-noLabel"><span class="math display">\[
 E_c=\frac{r}{2}.
-\tag{4.74}\]</span></span> The maximum yield is <span id="eq-noLabel"><span class="math display">\[
+\tag{74}\]</span></span> The maximum yield is <span id="eq-noLabel"><span class="math display">\[
 E^*=\frac{rK}{4}.
-\tag{4.75}\]</span></span></p>
+\tag{75}\]</span></span></p>
 <p>We identify the time scale over which stocks return to steady state by linearising about the steady state <span class="math inline">\(N^*=K(1-E/r)\)</span>, hence <span id="eq-noLabel"><span class="math display">\[
 \frac{d \hat{N}}{dt} = (E-r)\hat{N}.
-\tag{4.76}\]</span></span> Hence the recovery time scale is <span id="eq-noLabel"><span class="math display">\[
+\tag{76}\]</span></span> Hence the recovery time scale is <span id="eq-noLabel"><span class="math display">\[
 T_R(E)=O(\frac{1}{r-E}).
-\tag{4.77}\]</span></span> As the harvesting rate approaches the linear growth rate <span class="math inline">\(r\)</span>, not only does the steady state population tend to zero but the timescale for stocks to recover tends to infinity.</p>
+\tag{77}\]</span></span> As the harvesting rate approaches the linear growth rate <span class="math inline">\(r\)</span>, not only does the steady state population tend to zero but the timescale for stocks to recover tends to infinity.</p>
 </section>
-<section id="delay-differential-equation-models" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="delay-differential-equation-models"><span class="header-section-number">4.6</span> Delay differential equation models</h2>
+<section id="delay-differential-equation-models" class="level2">
+<h2 class="anchored" data-anchor-id="delay-differential-equation-models">Delay differential equation models</h2>
 <p>Consider a model of the form <span id="eq-noLabel"><span class="math display">\[
 \frac{dN}{dt}=H(N(t),N(t-T)),
-\tag{4.78}\]</span></span> such that the right-hand side now depends on the value <span class="math inline">\(N\)</span> not just at time <span class="math inline">\(t\)</span> but also at some delay time <span class="math inline">\(t-T\)</span>. We now need to prescribe initial conditions of the form <span id="eq-noLabel"><span class="math display">\[
+\tag{78}\]</span></span> such that the right-hand side now depends on the value <span class="math inline">\(N\)</span> not just at time <span class="math inline">\(t\)</span> but also at some delay time <span class="math inline">\(t-T\)</span>. We now need to prescribe initial conditions of the form <span id="eq-noLabel"><span class="math display">\[
 N(t)=f(t), \quad -T&lt;t\leq0.
-\tag{4.79}\]</span></span></p>
+\tag{79}\]</span></span></p>
 <p>Consider a simple case of a linear model <span id="eq-noLabel"><span class="math display">\[
 \frac{dN}{dt}=-N(t-T).
-\tag{4.80}\]</span></span> A steady state, <span class="math inline">\(N^*\)</span>, is defined such that <span class="math inline">\(N(t)=N(t-T)=N^*\)</span>. Hence <span id="eq-noLabel"><span class="math display">\[
+\tag{80}\]</span></span> A steady state, <span class="math inline">\(N^*\)</span>, is defined such that <span class="math inline">\(N(t)=N(t-T)=N^*\)</span>. Hence <span id="eq-noLabel"><span class="math display">\[
 0=-kN^*.
-\tag{4.81}\]</span></span> The only steady state is <span class="math inline">\(N^*=0\)</span>.</p>
+\tag{81}\]</span></span> The only steady state is <span class="math inline">\(N^*=0\)</span>.</p>
 <p>To compute the linear stability we consider solution of the linearised equation of the form <span id="eq-noLabel"><span class="math display">\[
 N(t)=e^{\lambda t}.
-\tag{4.82}\]</span></span> Hence <span id="eq-noLabel"><span class="math display">\[
+\tag{82}\]</span></span> Hence <span id="eq-noLabel"><span class="math display">\[
 N(t-T)=e^{\lambda (t-T)}.
-\tag{4.83}\]</span></span></p>
+\tag{83}\]</span></span></p>
 <p>Substitution yields <span id="eq-noLabel"><span class="math display">\[
 \lambda  e^{\lambda t} = - e^{\lambda (t-T)}.
-\tag{4.84}\]</span></span> Hence the eigenvalue, <span class="math inline">\(\lambda\)</span>, satisfies a transcendental equation <span id="eq-noLabel"><span class="math display">\[
+\tag{84}\]</span></span> Hence the eigenvalue, <span class="math inline">\(\lambda\)</span>, satisfies a transcendental equation <span id="eq-noLabel"><span class="math display">\[
 \lambda=-e^{-\lambda T}.
-\tag{4.85}\]</span></span> This equation has no solutions for <span class="math inline">\(\lambda \in \Re^+\)</span>. Hence any steady-states with real eigenvalues are linearly stable.</p>
+\tag{85}\]</span></span> This equation has no solutions for <span class="math inline">\(\lambda \in \Re^+\)</span>. Hence any steady-states with real eigenvalues are linearly stable.</p>
 <p>Now consider solutions <span class="math inline">\(\lambda \in \mathbb{C}\)</span>. Let <span class="math inline">\(\lambda=\mu+i\omega\)</span>. Substitution yields <span id="eq-noLabel"><span class="math display">\[
 \mu+i\omega = -e^{-\mu T}(\cos(\omega T)-i \sin(\omega T)).
-\tag{4.86}\]</span></span> Hence <span id="eq-mu"><span class="math display">\[
+\tag{86}\]</span></span> Hence <span id="eq-mu"><span class="math display">\[
 \mu=-\cos(\omega T)e^{-\mu T}
-\tag{4.87}\]</span></span> and <span id="eq-om"><span class="math display">\[
+\tag{87}\]</span></span> and <span id="eq-om"><span class="math display">\[
 \omega = \sin(\omega T)e^{-\mu T}.
-\tag{4.88}\]</span></span></p>
+\tag{88}\]</span></span></p>
 <p>For linear stability of the steady state it is required that <span class="math inline">\(\mu &lt;0\)</span>.</p>
-<p>If <span class="math inline">\(\omega\)</span> is a solution of <a href="#eq-mu" class="quarto-xref">Equation&nbsp;<span>4.87</span></a> and <a href="#eq-om" class="quarto-xref">Equation&nbsp;<span>4.88</span></a> then so is <span class="math inline">\(-\omega\)</span>. Hence w.l.o.g we consider the case <span class="math inline">\(\omega&gt;0\)</span>.</p>
-<p>Consider <span class="math inline">\(\mu=0\)</span> in <a href="#eq-mu" class="quarto-xref">Equation&nbsp;<span>4.87</span></a>. This implies <span id="eq-noLabel"><span class="math display">\[
+<p>If <span class="math inline">\(\omega\)</span> is a solution of <a href="#eq-mu" class="quarto-xref">Equation&nbsp;87</a> and <a href="#eq-om" class="quarto-xref">Equation&nbsp;88</a> then so is <span class="math inline">\(-\omega\)</span>. Hence w.l.o.g we consider the case <span class="math inline">\(\omega&gt;0\)</span>.</p>
+<p>Consider <span class="math inline">\(\mu=0\)</span> in <a href="#eq-mu" class="quarto-xref">Equation&nbsp;87</a>. This implies <span id="eq-noLabel"><span class="math display">\[
 \omega T=\frac{\pi}{2} + 2n\pi, \quad n \in Z.
-\tag{4.89}\]</span></span> We consider the smallest positive root, i.e.&nbsp;<span class="math inline">\(n=0\)</span>, as we want to consider the smallest value of delay time, <span class="math inline">\(T\)</span>, at which instability arises.</p>
+\tag{89}\]</span></span> We consider the smallest positive root, i.e.&nbsp;<span class="math inline">\(n=0\)</span>, as we want to consider the smallest value of delay time, <span class="math inline">\(T\)</span>, at which instability arises.</p>
 <p>Note <span class="math inline">\(\mu&lt;0\)</span> for <span id="eq-noLabel"><span class="math display">\[
 \omega T&lt; \frac{\pi}{2}.
-\tag{4.90}\]</span></span></p>
-<p>On the stablity boundary, <span class="math inline">\(\mu=0\)</span>. Upon substitution in <a href="#eq-om" class="quarto-xref">Equation&nbsp;<span>4.88</span></a> <span id="eq-noLabel"><span class="math display">\[
+\tag{90}\]</span></span></p>
+<p>On the stablity boundary, <span class="math inline">\(\mu=0\)</span>. Upon substitution in <a href="#eq-om" class="quarto-xref">Equation&nbsp;88</a> <span id="eq-noLabel"><span class="math display">\[
 \omega = \sin(\frac{\pi}{2})=1.
-\tag{4.91}\]</span></span></p>
+\tag{91}\]</span></span></p>
 <p>Hence the steady state is linearly stable for <span id="eq-noLabel"><span class="math display">\[
 T&lt; \frac{\pi}{2}.
-\tag{4.92}\]</span></span></p>
+\tag{92}\]</span></span></p>
 </section>
-<section id="references" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="references"><span class="header-section-number">4.7</span> References</h2>
+<section id="references" class="level2">
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-ludwig1978qualitative" class="csl-entry" role="listitem">
 <span class="nocase">Ludwig, Donald, Dixon D Jones, Crawford S Holling, et al.</span> 1978. <span>“Qualitative Analysis of Insect Outbreak Systems: The Spruce Budworm and Forest.”</span> <em>Journal of Animal Ecology</em> 47 (1): 315–32.
 </div>
-</div>
-</section>
-
-</main> <!-- /main -->
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -3628,21 +3484,9 @@ T&lt; \frac{\pi}{2}.
     }
   });
   </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="../part1/DiscreteTimeTwoPop.html" class="pagination-link" aria-label="Multi species population dynamics in discrete time">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multi species population dynamics in discrete time</span></span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="../part2/CtsTimeMultiPop.html" class="pagination-link" aria-label="Multi species population dynamics">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multi species population dynamics</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
 
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/PlanarSkyrmion/DI32011/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

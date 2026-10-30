@@ -1,56 +1,26 @@
 project:
-  type: book
+  type: website
   output-dir: docs
 
-book:
-  title: "DI32011"
-  author: "Thomas Winyard"
-  date: last-modified
-  repo-url: https://github.com/PlanarSkyrmion/DI32011/
-  downloads: pdf
-  repo-actions: [issue]
-  cover-image: DI32011Cover.png
+website:
+  title: "Logistic Map"
+  navbar:
+    title: "Logistic Map"
   
-  chapters:
-    - index.qmd
-    - introduction/Introduction.qmd
-    - part: "Discrete time"
-      chapters: 
-        - part1/DiscreteTimeOnePop.qmd
-        - part1/DiscreteTimeTwoPop.qmd
-    - part: "Continuous time"
-      chapters:
-        - part2/CtsTimeOnePop.qmd
-        - part2/CtsTimeMultiPop.qmd  
-        - part2/Biochemicalkinetics.qmd
-    - part: "Appendices"
-      chapters:
-        - appendix/PythonAppendix.qmd    
-        - appendix/CurveSketching.qmd
-      
 bibliography: references.bib
 
-number-sections: true
+number-sections: false
 
 format:
   html:
+    toc: false
+    page-layout: full
     theme: cosmo
     code-fold: true
     include-in-header: mathjax.html
-  pdf:
-    documentclass: scrreprt
-    echo: false
-    include-in-header:
-      - text: |
-          \usepackage{chemarr}
-          \usepackage{lipsum}
-          \usepackage{tikz}
-          \AtBeginDocument{\thispagestyle{empty}
-          \begin{tikzpicture}[remember picture,overlay]
-          \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{DI32011Cover.png}};
-          \end{tikzpicture}\clearpage}
+
 filters:
   - shinylive
-  
+
 execute:
   warning: false

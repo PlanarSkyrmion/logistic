@@ -1,17 +1,116 @@
-# DI32011: Mathematical Biology I {.unnumbered}
+# The Logistic Map {.unnumbered}
 <br>
 
-**Lecturer:** Thomas Winyard
+The Logistic Map is given by,
+$$
+x_{n+1}=rx_n(1-x_n),
+$$ {#eq-LogisticEqn} 
 
-**Email:** [twinyard001@dundee.ac.uk](mailto:twinyard001@dundee.ac.uk)
+The behaviour of the population over time looks like,
 
-**Website:** [twinyard.co.uk](https://www.twinyard.co.uk){target="_blank"}
+::: {#fig-logisticapp}
 
-**Office:** DIICSU 618
+```{shinylive-python}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 500
 
-**Office Hour:** Wednesday 14:00 -- 15:00, [Office 618]
 
-**Online Office Hour:** Thursday 14:00 -- 15:00, [teams](https://teams.microsoft.com/meet/36950260924493?p=jiceSS5iJ9SqpMDV2g){target="_blank"}
+from shiny import App, Inputs, Outputs, Session, render, ui
+from shiny import reactive
+
+import numpy as np
+from pathlib import Path
+import matplotlib.pyplot as plt
+from scipy.integrate import odeint
+
+app_ui = ui.page_fluid(
+    ui.layout_sidebar(
+        ui.sidebar(
+    ui.input_slider(id="r",label="r",min=0.0,max=5.0,value=1.2,step=0.001),             
+    ui.input_slider(id="u0",label="x_0 (Initial condition)",min=0.0,max=1.0,value=0.5,step=0.01),
+    ui.input_slider(id="T",label="Number of iterations",min=0.0,max=60.0,value=20.0,step=1.0),
+       
+        ),
+
+        ui.output_plot("plot"),
+    ),
+)
+
+def server(input, output, session):
+    
+    @render.plot
+    def plot():
+        fig, ax = plt.subplots(1,1)
+        
+        r=float(input.r())
+        u0=float(input.u0())
+        T=int(input.T())
+        
+        def logisticrhs(x,par):
+          r=par
+          f=r*x*(1.0 - x)
+          return f
+        # Define rhs of logistic map 
+     
+        # this function computes the solutio to the difference equation. It also stores solution in format for cobweb plotting
+        def SolveSingleDiffAndCobweb(t,rhs,N_0,r):
+          # Initialise solution vector
+          N = np.zeros_like(t,dtype=float)
+          N[0]=N_0
+
+
+          num_time_steps=t.shape[0]
+
+
+          # Initialise cobweb solution object
+          CobwebSol=np.zeros((2*num_time_steps,2))
+          CobwebSol[0,0]=N_0
+          CobwebSol[0,1]=rhs(N_0,r)
+          CobwebSol[1,0]=CobwebSol[0,1]
+          CobwebSol[1,1]=CobwebSol[0,1]
+
+          # loop over time and compute solution.
+          for i in t:
+            if i>0:
+              N[i]=rhs(N[i-1],r) 
+
+              sol_temp=N[i-1]
+              rhs_temp=rhs(sol_temp,r)
+              CobwebSol[2*i,0]=sol_temp
+              CobwebSol[2*i,1]=rhs_temp
+              CobwebSol[2*i+1,0]=rhs_temp
+              CobwebSol[2*i+1,1]=rhs_temp
+          return N, CobwebSol
+
+        # Define discretised t domain
+        t = np.arange(0, T, 1)
+        # define initial conditions
+        init_cond=u0
+        
+        # Compute numerical solution of ODEs
+        y,CobwebSol = SolveSingleDiffAndCobweb(t,logisticrhs,init_cond,r)
+
+        # Plot results
+        
+        #ax[0].plot(t,y)
+        ax.set_ylim(0, 1)
+        ax.set_xlim(0, T)
+        ax.plot(t, y, linestyle='-', alpha=0.4) # faint line
+        ax.plot(t, y, linestyle='None', marker='o',color='C0', ms=3) # solid 
+        ax.set_xlabel('$n$')
+        ax.set_ylabel('$x_n$')
+        ax.set_title('Time series')
+
+        plt.grid()
+
+        plt.show()
+    
+app = App(app_ui, server)
+```
+
+An app to explore the behaviour of the Logistic map.
+:::
 
 <br>
 
@@ -21,69 +120,4 @@
 
 These will take the form of two roughly 45 minute lectures on Monday seperated by a break and a 30 to 45 minute lecture and 45 to 60 minute tutorial on Friday. Hence, the schedule is based on roughly 2 hours of lectures and 1 hour of tutorial a week.
 
-## Lecture notes
-The lecture notes are based on ones originally written by Philip Murray, and are aviailable in [HTML](https://www.twinyard.co.uk/DI32011) or [PDF](https://raw.githubusercontent.com/PlanarSkyrmion/DI32011/main/docs/DI32011.pdf) at my [website](https://www.twinyard.co.uk){target="_blank"}. You can also generate the pdf by clicking on the pdf link at the top left of the webpage. Note the PDF version of the notes will not include interactive python elements. I will occasionally edit/update the notes as we proceed through lectures. If you spot any errors, typos or omissions please let me know via [email](mailto:twinyard001@dundee.ac.uk).
-
-## Reading 
-* Mathematical Biology I: An Introduction, @murray2002mathematical
-* Essential Mathemtical Biology @britton2003essential
-* Mathematical models in Biology @edelstein2005mathematical
-
-We will follow Murray as the course text book while the other two sources are recomended reading.
-
-## Early weeks cover
-Due to visa issues I will not be present for the first few weeks of the course and [Chris Jefferson](mailto:CJefferson001@dundee.ac.uk) has kindly agreed to cover. You can still reach me via email and I will hold electronic office hours until I can do them in person (see above).
-
-## Tutorials
-Tutorials will take place in the Friday slot each week with the tutorial sheet provided in advance. To get the most out of tutorials read through the tutorial sheet in advance and attept the simpler questions. This will allow you to focus on (and discuss) the most salient questions in the tutorial. Tutorials are also an oportunity to practice good written mathematical presentation and how to communicate mathematics with each other.
-
-## Assessment
-* Final exam (80 \%)
-* 2 class tests (10 \% each), approximately week 7 and 11 of term
-
-Details of final exam and class test format TBA.
-
-## Python code
-
-Python code is provided for most of the figures in the notes (you can expand the code section by clicking 'Code'). Note that the Python code does not appear in the pdf.
-
- Many of you have taken the Introduction to Programming module at Level 2 and therefore have some experience installing and using Python. You may also be taking Fundamentals of Scientific Computing alongside this course for which Python will play a part. I strongly encourage you to use the provided codes as a tool to play around with numerical solutions of the various models that we will be working on. The codes should run as standalone Python codes.
-
-
-::: {.callout-note}
-
-To use Python on your own computer we recomend Anaconda. Instructions on how to install it were provided in Introduction to Programming and are available [here](https://www.twinyard.co.uk/DI32011/assets/pythonIntro.pdf). 
-
-To use it:
-
-1. Launch Anaconda
-2. When a folder opens, double click on *Spyder*.
-3. Paste a code from lecture notes into the editor on the left-hand side.
-4. Click on the green arrow to run the code.
-5. The plots should appear in the plots tab on the right-hand side.
-6. Experiment with the code. When you change a model parameter, does the solution change in an expected way?
-
-:::
-
- The notes also provide some examples of how to use Python as a symbolic calculator. This uses a Python library called *sympy* and is quite similar to Maple.
-
-## Schedule
-
-| Week | Lecture  | Section    | Tutorial sheet| Activity    |
-|------|----------|------------|---------------|-------------|
-| 4    | 1 -- 2   | 1.0 -- 2.4 | 1             |             |
-| 5    | 3 -- 4   | 2.4 -- 2.8 | 2             |             |
-| 6    | 5        | 3.0 -- 3.3 | 3             |Holiday (Mon)|
-| 7    | 6 -- 7   | 3.3 -- 4.2 | 4             |             |
-| 8    | 8 -- 9   | 4.2 -- 4.4 | -             |Class Test 1 (20th) |
-| 9    | 10       | 4.4 -- 4.5 | 5             |Holiday (Fri)|
-| 10   | 11 -- 12 | 4.5 -- 5.1 | 6             |Holiday (Mon)*|
-| 11   | 13 -- 14 | 5          | -             |Class Test 2 (TBA) |
-| 12   | 15 -- 16 | 6          | 7             |             |
-| 13   | Revision | Revision   | Exam Revision |Exam Revision|
-: Projected delivery
-
-*This lecture is expected to be rescheuled either as part of a make up day or independently, however the details of this are yet to be confirmed.
-
-## References
 
