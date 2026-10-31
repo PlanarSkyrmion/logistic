@@ -4,7 +4,7 @@
 The Logistic Map is given by,
 $$
 x_{n+1}=rx_n(1-x_n),
-$$ {#eq-LogisticEqn} 
+$$ {#eq-LogisticEqn}
 
 The behaviour of the population over time looks like,
 
@@ -114,10 +114,224 @@ An app to explore the behaviour of the Logistic map.
 
 <br>
 
-## Contact Hours
-* Mondays 10:00 -- 12:00, A206 (Lecture)
-* Fridays 16:00 -- 18:00, A206 (Lecture/Tutorial)
+## Bifurcation diagram
+Plot the equilibrum (long time) values for $x_n$ for different values of $r$ to get,
 
-These will take the form of two roughly 45 minute lectures on Monday seperated by a break and a 30 to 45 minute lecture and 45 to 60 minute tutorial on Friday. Hence, the schedule is based on roughly 2 hours of lectures and 1 hour of tutorial a week.
+::: {#fig-logisticInteractive}
+
+```{shinylive-python}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 700
+
+import numpy as np
+import plotly.graph_objects as go
+
+from shiny import App, reactive, ui
+from shinywidgets import output_widget, render_widget
 
 
+# --------------------------------------------------
+# Logistic map settings
+# --------------------------------------------------
+
+X0 = 0.5
+
+R_SAMPLES = 1800
+TRANSIENT = 2000
+KEEP = 150
+
+POINT_SIZE = 2
+POINT_OPACITY = 0.45
+
+
+# --------------------------------------------------
+# Calculate bifurcation points
+# --------------------------------------------------
+
+def calculate_bifurcation(r_min, r_max):
+
+    r_values = np.linspace(r_min, r_max, R_SAMPLES)
+
+    x = np.full(R_SAMPLES, X0)
+
+    # Discard the transient iterations
+    for _ in range(TRANSIENT):
+        x = r_values * x * (1 - x)
+
+    # Store the long-term behaviour
+    points = np.empty((KEEP, R_SAMPLES))
+
+    for i in range(KEEP):
+        x = r_values * x * (1 - x)
+        points[i, :] = x
+
+    r_points = np.tile(r_values, KEEP)
+    x_points = points.ravel()
+
+    return r_points, x_points
+
+
+# --------------------------------------------------
+# Shiny user interface
+# --------------------------------------------------
+
+app_ui = ui.page_fluid(
+
+    ui.h2("Logistic Map: Bifurcation Diagram"),
+
+    ui.p(
+        "Drag a rectangle over the diagram to zoom into "
+        "a region."
+    ),
+
+    ui.input_action_button(
+        "reset",
+        "Reset diagram"
+    ),
+
+    ui.hr(),
+
+    output_widget("bifurcation"),
+
+    ui.p(
+        "Horizontal axis: r",
+        " | ",
+        "Vertical axis: N"
+    )
+)
+
+
+# --------------------------------------------------
+# Shiny server
+# --------------------------------------------------
+
+def server(input, output, session):
+
+    # Current viewing limits
+    view = reactive.value((0.0, 4.0, 0.0, 1.0))
+
+
+    # Reset the diagram
+    @reactive.effect
+    @reactive.event(input.reset)
+    def reset_view():
+
+        view.set((0.0, 4.0, 0.0, 1.0))
+
+
+    # Handle rectangular selections
+    def on_select(trace, points, state):
+
+        if len(points.xs) == 0:
+            return
+
+        selected_r = np.asarray(points.xs, dtype=float)
+        selected_n = np.asarray(points.ys, dtype=float)
+
+        r0 = float(np.min(selected_r))
+        r1 = float(np.max(selected_r))
+
+        n0 = float(np.min(selected_n))
+        n1 = float(np.max(selected_n))
+
+        # Add a little padding around the selected points
+        r_padding = max((r1 - r0) * 0.05, 0.005)
+        n_padding = max((n1 - n0) * 0.08, 0.005)
+
+        r0 = max(0.0, r0 - r_padding)
+        r1 = min(4.0, r1 + r_padding)
+
+        n0 = max(0.0, n0 - n_padding)
+        n1 = min(1.0, n1 + n_padding)
+
+        # Avoid zero-width or zero-height views
+        if r1 <= r0 or n1 <= n0:
+            return
+
+        view.set((r0, r1, n0, n1))
+
+
+    # Draw the interactive diagram
+    @render_widget
+    def bifurcation():
+
+        r_min, r_max, n_min, n_max = view.get()
+
+        # Recalculate the points for the current r range
+        r_points, n_points = calculate_bifurcation(
+            r_min,
+            r_max
+        )
+
+        # Create an interactive Plotly figure
+        fig = go.FigureWidget(
+
+            data=[
+                go.Scattergl(
+                    x=r_points,
+                    y=n_points,
+                    mode="markers",
+                    marker=dict(
+                        size=POINT_SIZE,
+                        opacity=POINT_OPACITY
+                    ),
+                    hoverinfo="skip",
+                    showlegend=False
+                )
+            ]
+        )
+
+        # Listen for rectangular selections
+        fig.data[0].on_selection(on_select)
+
+        fig.update_layout(
+
+            title="Logistic Map Bifurcation Diagram",
+
+            xaxis=dict(
+                title="r",
+                range=[r_min, r_max],
+                autorange=False
+            ),
+
+            yaxis=dict(
+                title="x_e",
+                range=[n_min, n_max],
+                autorange=False
+            ),
+
+            dragmode="select",
+
+            selectdirection="any",
+
+            height=600,
+
+            margin=dict(
+                l=65,
+                r=30,
+                t=65,
+                b=60
+            ),
+
+            template="plotly_white",
+
+            uirevision="constant"
+        )
+
+        return fig
+
+
+app = App(app_ui, server)
+```
+
+An app to explore the behaviour of the Logistic map.
+:::
+
+
+
+## QR code
+
+QR code to access interactive website,
+
+![QRCode](QRWebsiteCode.png)
